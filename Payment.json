@@ -1,0 +1,77 @@
+openapi: 3.0.2
+info:
+    title: Payments
+    description: 'Payments API'
+    contact:
+        name: 'Anurag Saran'
+    license:
+        name: 'Apache 2.0'
+        url: 'https://www.apache.org/licenses/LICENSE-2.0'
+    version: 1.0.0
+paths:
+    /payment:
+        description: 'Post: Submit a new payment request.'
+        post:
+            description: 'Submit Only One Payment Request At a Time.'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/payment'
+            responses:
+                '201':
+                    description: 'Successfull response'
+    /transaction:
+        description: 'Get Tranaction details.'
+        get:
+            responses:
+                '200':
+                    description: 'Successful response'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Transactions'
+components:
+    schemas:
+        payment:
+            title: 'Root Type for payments'
+            description: 'The root of the payments type''s schema.'
+            type: object
+            properties:
+                clientid:
+                    type: string
+                senderFirstName:
+                    type: string
+                senderLastName:
+                    type: string
+                receiverFirstName:
+                    type: string
+                receiverLastName:
+                    type: string
+                receiverEmail:
+                    type: string
+                receiverCellPhone:
+                    format: int64
+                    type: integer
+            example: "{\n    \"clientid\": \"abc123\",\n    \"senderFirstName\": \"anurag\",\n    \"senderLastName\": \"saran\",\n    \"receiverFirstName\": \"anurag\",\n    \"receiverLastName\": \"saran\",\n    \"receiverEmail\": \"asaran@redhat.com\",\n    \"receiverCellPhone\": 7216628053\n    \n}"
+        Transactions:
+            title: 'Root Type for Transactions'
+            description: Transactions
+            type: array
+            items:
+                type: object
+                properties:
+                    transId:
+                        type: string
+                    receipeintName:
+                        type: string
+                    amount:
+                        format: double
+                        type: number
+                    status:
+                        type: string
+            example: "[\n    {\n        \"transId\": \"abc123\",\n        \"receipeintName\": \"anurag saran\",\n        \"amount\": 123.1,\n        \"status\": \"Pending\"\n    }\n]"
+tags:
+    -
+        name: Payments
+        description: ""
